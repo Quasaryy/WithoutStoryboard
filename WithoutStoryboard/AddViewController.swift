@@ -40,6 +40,8 @@ class AddViewController: UIViewController {
         view.backgroundColor = .systemGray6
         addSubviews()
         setupConstraints()
+        
+        nameTextField.delegate = self
     }
 }
 
@@ -74,5 +76,11 @@ extension AddViewController {
             nameTextField.text = nil
         }
         dismiss(animated: true)
+    }
+}
+
+extension AddViewController: UITextFieldDelegate {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
 }

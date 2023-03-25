@@ -23,13 +23,10 @@ class MainTableViewController: UITableViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         title = "Contacts"
         
-        // Adding TableView dataSource and delegate
+        // Adding delegates
         tableView.dataSource = self
         tableView.delegate = self
-        
-        // Adding AddViewController delegate
         addViewController.delegate = self
-        
         
         // Registering the cell
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellName)

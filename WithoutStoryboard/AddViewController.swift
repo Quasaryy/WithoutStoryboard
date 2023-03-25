@@ -48,7 +48,7 @@ class AddViewController: UIViewController {
 }
 
 extension AddViewController {
-    // MARK: AddSubviews
+    // MARK: Subviews
     private func addSubviews() {
         view.addSubview(nameTextField)
         view.addSubview(saveButton)
@@ -96,6 +96,7 @@ extension AddViewController {
     
 }
 
+// MARK: TextField Delegate
 extension AddViewController: UITextFieldDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)

@@ -12,7 +12,7 @@ class MainTableViewController: UITableViewController {
     // MARK: Properties
     private let cellName = "Cell"
     private var person = UserDefaults.standard.array(forKey: "person") as? [String] ?? []
-    let addViewController = AddViewController()
+    private let addViewController = AddViewController()
 
     // MARK: Override Methods
     override func viewDidLoad() {
@@ -77,13 +77,14 @@ extension MainTableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    // MARK: Private Methods
+    // MARK: Targets
     @objc private func openAddWindow() {
         present(addViewController, animated: true)
     }
     
 }
 
+// MARK: AddViewController Delegate
 extension MainTableViewController: AddViewControllerDelegate {
     func saveContact(contactName: String) {
         person.append(contactName)

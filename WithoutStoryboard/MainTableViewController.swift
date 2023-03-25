@@ -36,7 +36,6 @@ class MainTableViewController: UITableViewController {
         
         // Display an Edit button
         navigationItem.leftBarButtonItem = editButtonItem
-        let isEnabled = navigationItem.leftBarButtonItem?.isEnabled
         if person.isEmpty { navigationItem.leftBarButtonItem?.isEnabled = false }
     }
 

@@ -19,6 +19,7 @@ class AddViewController: UIViewController {
         name.placeholder = "Add new contact"
         name.borderStyle = .roundedRect
         name.clearButtonMode = .whileEditing
+        name.addTarget(self, action: #selector(buttonState), for: .editingChanged)
         return name
     }()
     
@@ -26,8 +27,9 @@ class AddViewController: UIViewController {
         let saveButton = UIButton()
         saveButton.layer.cornerRadius = 5
         saveButton.setTitle("Save", for: .normal)
-        saveButton.setTitleColor(.systemBlue, for: .normal)
+        saveButton.setTitleColor(.systemGray, for: .normal)
         saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
+        saveButton.isEnabled = false
         return saveButton
     }()
     
@@ -69,14 +71,29 @@ extension AddViewController {
         saveButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
     }
     
-    // MARK: Save Method
+    // MARK: Targets
     @objc private func save() {
         if let text = nameTextField.text, !text.isEmpty {
             delegate?.saveContact(contactName: text)
             nameTextField.text = nil
+            saveButton.isEnabled = false
+            saveButton.setTitleColor(.systemGray, for: .normal)
         }
         dismiss(animated: true)
     }
+    
+    @objc private func buttonState() {
+        guard let text = nameTextField.text else { return }
+        if text.isEmpty {
+            saveButton.isEnabled = false
+            saveButton.setTitleColor(.systemGray, for: .normal)
+        }
+        else {
+            saveButton.isEnabled = true
+            saveButton.setTitleColor(.systemBlue, for: .normal)
+        }
+    }
+    
 }
 
 extension AddViewController: UITextFieldDelegate {

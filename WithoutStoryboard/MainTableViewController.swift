@@ -36,6 +36,8 @@ class MainTableViewController: UITableViewController {
         
         // Display an Edit button
         navigationItem.leftBarButtonItem = editButtonItem
+        let isEnabled = navigationItem.leftBarButtonItem?.isEnabled
+        if person.isEmpty { navigationItem.leftBarButtonItem?.isEnabled = false }
     }
 
 }
@@ -65,6 +67,12 @@ extension MainTableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let removed = person.remove(at: sourceIndexPath.row)
+        person.insert(removed, at: destinationIndexPath.row)
+        UserDefaults.standard.set(person, forKey: "person")
+    }
+    
     // MARK: TableView Delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -84,6 +92,9 @@ extension MainTableViewController: AddViewControllerDelegate {
         let indexPath: IndexPath
         indexPath = [0, person.count - 1]
         tableView.insertRows(at: [indexPath], with: .automatic)
+        if navigationItem.leftBarButtonItem?.isEnabled == false {
+            navigationItem.leftBarButtonItem?.isEnabled = true
+        }
     }
 
 }

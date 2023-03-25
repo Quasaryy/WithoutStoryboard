@@ -34,6 +34,8 @@ class MainTableViewController: UITableViewController {
         // Adding right bar buton item
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(openAddWindow))
         
+        // Display an Edit button
+        navigationItem.leftBarButtonItem = editButtonItem
     }
 
 }
@@ -53,6 +55,14 @@ extension MainTableViewController {
         cell.contentConfiguration = content
                 
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            person.remove(at: indexPath.row)
+            UserDefaults.standard.set(person, forKey: "person")
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
     }
     
     // MARK: TableView Delegate

@@ -11,7 +11,7 @@ class MainTableViewController: UITableViewController {
     
     // MARK: Properties
     private let cellName = "Cell"
-    private var person: [String] = []
+    private var person = UserDefaults.standard.array(forKey: "person") as? [String] ?? []
     let addViewController = AddViewController()
 
     // MARK: Override Methods
@@ -33,6 +33,7 @@ class MainTableViewController: UITableViewController {
         
         // Adding right bar buton item
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(openAddWindow))
+        
     }
 
 }
@@ -69,6 +70,7 @@ extension MainTableViewController {
 extension MainTableViewController: AddViewControllerDelegate {
     func saveContact(contactName: String) {
         person.append(contactName)
+        UserDefaults.standard.set(person, forKey: "person")
         let indexPath: IndexPath
         indexPath = [0, person.count - 1]
         tableView.insertRows(at: [indexPath], with: .automatic)

@@ -12,7 +12,6 @@ class MainTableViewController: UITableViewController {
     // MARK: Properties
     private let cellName = "Cell"
     private var person = UserDefaults.standard.array(forKey: "person") as? [String] ?? []
-    private let addViewController = AddViewController()
 
     // MARK: Override Methods
     override func viewDidLoad() {
@@ -26,7 +25,6 @@ class MainTableViewController: UITableViewController {
         // Adding delegates
         tableView.dataSource = self
         tableView.delegate = self
-        addViewController.delegate = self
         
         // Registering the cell
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellName)
@@ -79,6 +77,8 @@ extension MainTableViewController {
     
     // MARK: Targets
     @objc private func openAddWindow() {
+        let addViewController = AddViewController()
+        addViewController.delegate = self
         present(addViewController, animated: true)
     }
     
@@ -89,8 +89,7 @@ extension MainTableViewController: AddViewControllerDelegate {
     func saveContact(contactName: String) {
         person.append(contactName)
         UserDefaults.standard.set(person, forKey: "person")
-        let indexPath: IndexPath
-        indexPath = [0, person.count - 1]
+        let indexPath: IndexPath = [0, person.count - 1]
         tableView.insertRows(at: [indexPath], with: .automatic)
         if navigationItem.leftBarButtonItem?.isEnabled == false {
             navigationItem.leftBarButtonItem?.isEnabled = true

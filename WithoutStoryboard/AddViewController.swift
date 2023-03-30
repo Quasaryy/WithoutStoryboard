@@ -75,9 +75,6 @@ extension AddViewController {
     @objc private func save() {
         if let text = nameTextField.text, !text.isEmpty {
             delegate?.saveContact(contactName: text)
-            nameTextField.text = nil
-            saveButton.isEnabled = false
-            saveButton.setTitleColor(.systemGray, for: .normal)
         }
         dismiss(animated: true)
     }

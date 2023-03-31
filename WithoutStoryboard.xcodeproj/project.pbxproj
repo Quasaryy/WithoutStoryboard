@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D24D2CD929D755E3002B7594 /* WithoutStroryboard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D24D2CD729D755E2002B7594 /* WithoutStroryboard.xcdatamodeld */; };
 		D2914F3E29CE1118008B8165 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2914F3D29CE1118008B8165 /* AppDelegate.swift */; };
 		D2914F4029CE1118008B8165 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2914F3F29CE1118008B8165 /* SceneDelegate.swift */; };
 		D2914F4229CE1118008B8165 /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2914F4129CE1118008B8165 /* MainTableViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D24D2CD829D755E3002B7594 /* WithoutStroryboard.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WithoutStroryboard.xcdatamodel; sourceTree = "<group>"; };
 		D2914F3A29CE1118008B8165 /* WithoutStoryboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WithoutStoryboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2914F3D29CE1118008B8165 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D2914F3F29CE1118008B8165 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				D2914F4629CE1119008B8165 /* Assets.xcassets */,
 				D2914F4829CE1119008B8165 /* LaunchScreen.storyboard */,
 				D2914F4B29CE1119008B8165 /* Info.plist */,
+				D24D2CD729D755E2002B7594 /* WithoutStroryboard.xcdatamodeld */,
 			);
 			path = WithoutStoryboard;
 			sourceTree = "<group>";
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D24D2CD929D755E3002B7594 /* WithoutStroryboard.xcdatamodeld in Sources */,
 				D2914F4229CE1118008B8165 /* MainTableViewController.swift in Sources */,
 				D2914F3E29CE1118008B8165 /* AppDelegate.swift in Sources */,
 				D2914F4029CE1118008B8165 /* SceneDelegate.swift in Sources */,
@@ -354,6 +358,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D24D2CD729D755E2002B7594 /* WithoutStroryboard.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D24D2CD829D755E3002B7594 /* WithoutStroryboard.xcdatamodel */,
+			);
+			currentVersion = D24D2CD829D755E3002B7594 /* WithoutStroryboard.xcdatamodel */;
+			path = WithoutStroryboard.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = D2914F3229CE1117008B8165 /* Project object */;
 }

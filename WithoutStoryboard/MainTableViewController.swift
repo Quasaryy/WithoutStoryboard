@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import CoreData
 
 class MainTableViewController: UITableViewController {
     
     // MARK: Properties
     private let cellName = "Cell"
-    private var person = UserDefaults.standard.array(forKey: "person") as? [String] ?? []
+    private var persons: [NSManagedObject] = []
 
     // MARK: Override Methods
     override func viewDidLoad() {
@@ -34,7 +35,13 @@ class MainTableViewController: UITableViewController {
         
         // Display an Edit button
         navigationItem.leftBarButtonItem = editButtonItem
-        if person.isEmpty { navigationItem.leftBarButtonItem?.isEnabled = false }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        loadManagedObjects()
+        if persons.isEmpty { navigationItem.leftBarButtonItem?.isEnabled = false }
     }
 
 }
@@ -42,7 +49,7 @@ class MainTableViewController: UITableViewController {
 extension MainTableViewController {
     // MARK: TableView DataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return person.count
+        return persons.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -50,7 +57,7 @@ extension MainTableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellName, for: indexPath)
         
         var content = cell.defaultContentConfiguration()
-        content.text = person[indexPath.row]
+        content.text = persons[indexPath.row].value(forKey: "name") as? String
         cell.contentConfiguration = content
                 
         return cell
@@ -58,16 +65,19 @@ extension MainTableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            person.remove(at: indexPath.row)
-            UserDefaults.standard.set(person, forKey: "person")
+            let person = persons[indexPath.row]
+            
+            // Core Data block
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            appDelegate.persistanseContainer.viewContext.delete(person)
+            appDelegate.saveContext()
+            
+            // Array block
+            persons.remove(at: indexPath.row)
+            
+            // TableView block
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
-    }
-    
-    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let removed = person.remove(at: sourceIndexPath.row)
-        person.insert(removed, at: destinationIndexPath.row)
-        UserDefaults.standard.set(person, forKey: "person")
     }
     
     // MARK: TableView Delegate
@@ -82,15 +92,40 @@ extension MainTableViewController {
         present(addViewController, animated: true)
     }
     
+    // MARK: Loading managed objects
+    private func loadManagedObjects() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let context = appDelegate.persistanseContainer.viewContext
+        let request = NSFetchRequest<NSManagedObject>(entityName: "Person")
+        
+        do {
+            try persons = context.fetch(request)
+        } catch let error as NSError {
+            print("Cant fetch \(error), \(error.userInfo)")
+        }
+    }
+    
 }
 
 // MARK: AddViewController Delegate
 extension MainTableViewController: AddViewControllerDelegate {
     func saveContact(contactName: String) {
-        person.append(contactName)
-        UserDefaults.standard.set(person, forKey: "person")
-        let indexPath: IndexPath = [0, person.count - 1]
+        // Core Data block
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let context = appDelegate.persistanseContainer.viewContext
+        guard let entity = NSEntityDescription.entity(forEntityName: "Person", in: context) else { return }
+        let person = NSManagedObject(entity: entity, insertInto: context)
+        person.setValue(contactName, forKey: "name")
+        appDelegate.saveContext()
+        
+        // Array block
+        persons.append(person)
+        
+        // TableView block
+        let indexPath: IndexPath = [0, persons.count - 1]
         tableView.insertRows(at: [indexPath], with: .automatic)
+        
+        // Navigation Controller block
         if navigationItem.leftBarButtonItem?.isEnabled == false {
             navigationItem.leftBarButtonItem?.isEnabled = true
         }

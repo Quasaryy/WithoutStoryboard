@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: Core Data stack
     lazy var persistanseContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "WithoutStroryboard")
-        container.loadPersistentStores { storeDescription, error in
+        container.loadPersistentStores { _, error in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }

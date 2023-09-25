@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AddViewControllerDelegate: AnyObject {
-    func saveContact(contactName: String) -> Void
+    func saveContact(contactName: String)
 }
 
 class AddViewController: UIViewController {
